@@ -6,8 +6,14 @@ import { renderToStaticNodeStream } from 'react-dom/server'
 import React from 'react'
 
 import cookieParser from 'cookie-parser'
+
 import config from './config'
+
 import Html from '../client/html'
+
+const { readFile, writeFile } = require('fs').promises
+
+const shortid = require('shortid')
 
 require('colors')
 
@@ -33,6 +39,124 @@ const middleware = [
 ]
 
 middleware.forEach((it) => server.use(it))
+
+const setNewTaskObj = (name) => {
+  return {
+    taskId: shortid.generate(),
+    title: name,
+    _isDeleted: false, // флаг удален ли таск. Физичически мы таски не удаляем, только помечаем что удален
+    _createdAt: +new Date(), // время в секундах от 1,1,1970 до момента создания таска,
+    _deletedAt: null, // время в секундах от 1,1,1970 до момента удаление таска или null
+    status: 'new' // ['done', 'new', 'in progress', 'blocked'] - может быть только эти значения и никакие больше
+  }
+}
+
+const readTask = (category) => {
+  const tasks = readFile(`${__dirname}/tasks/${category}.json`, 'utf-8')
+    .then((text) => {
+      return JSON.parse(text)
+    })
+    .catch(() => [])
+  return tasks
+}
+
+const calculateTime = (tasks, date) => {
+  const day = 86400000
+  const week = 604800000
+  const month = 18144000000
+  let time
+  if (date === 'day') time = day
+  if (date === 'week') time = week
+  if (date === 'month') time = month
+  const tasksSortedByTime = tasks.filter((it) => {
+    return +new Date() - +it._createdAt <= time
+  })
+  return tasksSortedByTime
+}
+server.get('/api/v1/tasks/:category', async (req, res) => {
+  const { category } = req.params
+  const tasks = await readTask(category)
+  const sortedTasks = tasks.reduce((acc, rec) => {
+    delete rec._createdAt
+    delete rec._deletedAt
+    if (!rec._isDeleted) {
+      delete rec._isDeleted
+    }
+    return [...acc, rec]
+  }, [])
+  res.json(sortedTasks)
+})
+
+server.get('/api/v1/tasks/:category/:timespan', async (req, res) => {
+  const { category, timespan } = req.params
+  const tasks = await readTask(category)
+  const tasksSortedByTime = await calculateTime(tasks, timespan)
+  const tasksOutput = tasksSortedByTime.reduce((acc, rec) => {
+    delete rec._createdAt
+    delete rec._deletedAt
+    if (!rec._isDeleted) {
+      delete rec._isDeleted
+    }
+    return [...acc, rec]
+  }, [])
+  res.json(tasksOutput)
+})
+
+server.post('/api/v1/tasks/:category', async (req, res) => {
+  const { category } = req.params
+  const { title } = req.body
+  const tasks = await readTask(category)
+  const updatedTasks = [...tasks, setNewTaskObj(title)]
+  await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify(updatedTasks), 'utf-8')
+  const tasksOutput = updatedTasks.reduce((acc, rec) => {
+    delete rec._createdAt
+    delete rec._deletedAt
+    if (!rec._isDeleted) {
+      delete rec._isDeleted
+    }
+    return [...acc, rec]
+  }, [])
+  res.json(tasksOutput)
+})
+
+// server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
+//   const { category, id } = req.params
+//   const tasks = await readTask(category)
+//   const taskUpdatedIs = tasks
+//   const status = ['done', 'new', 'in progress', 'blocked']
+//   const updatedTasks = [...tasks, setNewTaskObj(title)]
+//   await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify(updatedTasks), 'utf-8')
+//   const tasksOutput = updatedTasks.reduce((acc, rec) => {
+//     delete rec._createdAt
+//     delete rec._deletedAt
+//     if (!rec._isDeleted) {
+//       delete rec._isDeleted
+//     }
+//     return [...acc, rec]
+//   }, [])
+//   res.json(tasksOutput)
+// })
+
+server.delete('/api/v1/tasks/:category/:id', async (req, res) => {
+  const { category, id } = req.params
+  const tasks = await readTask(category)
+  const tasksDeleted = tasks.map((it) => {
+    if (it.taskId === id) {
+      return { ...it, _isDeleted: true }
+    }
+    return it
+  })
+  await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify(tasksDeleted), 'utf-8')
+  const tasksOutput = tasksDeleted.reduce((acc, rec) => {
+    delete rec._createdAt
+    delete rec._deletedAt
+    if (!rec._isDeleted) {
+      delete rec._isDeleted
+    }
+    return [...acc, rec]
+  }, [])
+  res.json(tasksOutput)
+})
 
 server.use('/api/', (req, res) => {
   res.status(404)
