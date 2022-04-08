@@ -119,23 +119,31 @@ server.post('/api/v1/tasks/:category', async (req, res) => {
   res.json(tasksOutput)
 })
 
-// server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
-//   const { category, id } = req.params
-//   const tasks = await readTask(category)
-//   const taskUpdatedIs = tasks
-//   const status = ['done', 'new', 'in progress', 'blocked']
-//   const updatedTasks = [...tasks, setNewTaskObj(title)]
-//   await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify(updatedTasks), 'utf-8')
-//   const tasksOutput = updatedTasks.reduce((acc, rec) => {
-//     delete rec._createdAt
-//     delete rec._deletedAt
-//     if (!rec._isDeleted) {
-//       delete rec._isDeleted
-//     }
-//     return [...acc, rec]
-//   }, [])
-//   res.json(tasksOutput)
-// })
+server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
+  const { category, id } = req.params
+  const { newStatus } = req.body
+  const statusArray = ['done', 'new', 'in progress', 'blocked']
+  if (statusArray.indexOf(newStatus) === -1) {
+    res.json({ status: 'error', message: 'incorrect status' })
+  }
+  const tasks = await readTask(category)
+  const tasksUpdate = tasks.map((it) => {
+    if (it.taskId === id) {
+      return { ...it, status: newStatus }
+    }
+    return it
+  })
+  await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify(tasksUpdate), 'utf-8')
+  const tasksOutput = tasksUpdate.reduce((acc, rec) => {
+    delete rec._createdAt
+    delete rec._deletedAt
+    if (!rec._isDeleted) {
+      delete rec._isDeleted
+    }
+    return [...acc, rec]
+  }, [])
+  res.json(tasksOutput)
+})
 
 server.delete('/api/v1/tasks/:category/:id', async (req, res) => {
   const { category, id } = req.params
