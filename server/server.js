@@ -128,15 +128,15 @@ server.post('/api/v1/tasks/:category', async (req, res) => {
 
 server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
   const { category, id } = req.params
-  const { newStatus } = req.body
+  const { setStatus } = req.body
   const statusArray = ['done', 'new', 'in progress', 'blocked']
-  if (statusArray.indexOf(newStatus) === -1) {
-    res.json({ status: 'error', message: 'incorrect status' })
+  if (statusArray.indexOf(setStatus) === -1) {
+    return res.json({ status: 'error', message: 'incorrect status' })
   }
   const tasks = await readTask(category)
   const tasksUpdate = tasks.map((it) => {
     if (it.taskId === id) {
-      return { ...it, status: newStatus }
+      return { ...it, status: setStatus }
     }
     return it
   })
@@ -149,7 +149,7 @@ server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
     }
     return [...acc, rec]
   }, [])
-  res.json(tasksOutput)
+  return res.json(tasksOutput)
 })
 
 server.delete('/api/v1/tasks/:category/:id', async (req, res) => {

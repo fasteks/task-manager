@@ -7,6 +7,7 @@ import Head from './head'
 
 import { getTasks } from '../redux/reducers/tasks'
 import Task from './task'
+import TaskAdd from './taskAdd'
 
 const Tasks = () => {
   const dispatch = useDispatch()
@@ -22,10 +23,13 @@ const Tasks = () => {
       <Head title={category} />
       <Header />
       <div className="flex items-center justify-center h-full text-center bg-contain bg-gray-500">
-        <div className="flex items-center flex-wrap justify-center p-5 border-4 border-emerald-400 rounded-3xl bg-neutral-800">
-          {tasksList.map((it) => {
-            return <Task key={it.taskId} taskObj={it} />
-          })}
+        <div className="flex flex-col flex-wrap items-center justify-between p-5 border-4 border-emerald-600 rounded-3xl bg-neutral-800">
+          <TaskAdd />
+          <div className="flex flex-wrap">
+            {tasksList.map((it) => {
+              return <Task key={it.taskId} taskObj={it} category={category} />
+            })}
+          </div>
         </div>
       </div>
     </div>
