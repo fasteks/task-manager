@@ -4,6 +4,7 @@ const GET_CATEGORIES = '@task-manager/tasks/GET_CATEGORIES'
 const GET_TASKS = '@task-manager/tasks/GET_TASKS'
 const SET_STATUS = '@task-manager/tasks/SET_STATUS'
 const ADD_TASK = '@task-manager/tasks/ADD_TASK'
+const SET_TITLE = '@task-manager/tasks/SET_TITLE'
 
 const initialState = {
   categoriesList: [],
@@ -36,7 +37,12 @@ export default (state = initialState, action = {}) => {
         tasksList: action.tasksArray
       }
     }
-
+    case SET_TITLE: {
+      return {
+        ...state,
+        tasksList: action.tasksArray
+      }
+    }
     default:
       return state
   }
@@ -93,6 +99,23 @@ export function addTask(category, newTask) {
     })
       .then(({ data }) => {
         dispatch({ type: ADD_TASK, tasksArray: data })
+      })
+      .catch((err) => err)
+  }
+}
+
+export function changeTitle(category, id, newTitle) {
+  return async (dispatch) => {
+    await axios({
+      method: 'patch',
+      url: `/api/v1/tasks/${category}`,
+      data: {
+        currentId: id,
+        setTitle: newTitle
+      }
+    })
+      .then(({ data }) => {
+        dispatch({ type: SET_TITLE, tasksArray: data })
       })
       .catch((err) => err)
   }

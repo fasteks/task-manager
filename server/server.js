@@ -152,6 +152,28 @@ server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
   return res.json(tasksOutput)
 })
 
+server.patch('/api/v1/tasks/:category', async (req, res) => {
+  const { category } = req.params
+  const { setTitle, currentId } = req.body
+  const tasks = await readTask(category)
+  const tasksUpdate = tasks.map((it) => {
+    if (it.taskId === currentId) {
+      return { ...it, title: setTitle }
+    }
+    return it
+  })
+  await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify(tasksUpdate), 'utf-8')
+  const tasksOutput = tasksUpdate.reduce((acc, rec) => {
+    delete rec._createdAt
+    delete rec._deletedAt
+    if (!rec._isDeleted) {
+      delete rec._isDeleted
+    }
+    return [...acc, rec]
+  }, [])
+  return res.json(tasksOutput)
+})
+
 server.delete('/api/v1/tasks/:category/:id', async (req, res) => {
   const { category, id } = req.params
   const tasks = await readTask(category)
