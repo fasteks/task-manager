@@ -111,9 +111,9 @@ server.get('/api/v1/tasks/:category/:timespan', async (req, res) => {
 
 server.post('/api/v1/tasks/:category', async (req, res) => {
   const { category } = req.params
-  const { title } = req.body
+  const { addTask } = req.body
   const tasks = await readTask(category)
-  const updatedTasks = [...tasks, setNewTaskObj(title)]
+  const updatedTasks = [...tasks, setNewTaskObj(addTask)]
   await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify(updatedTasks), 'utf-8')
   const tasksOutput = updatedTasks.reduce((acc, rec) => {
     delete rec._createdAt

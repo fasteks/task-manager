@@ -3,6 +3,7 @@ import axios from 'axios'
 const GET_CATEGORIES = '@task-manager/tasks/GET_CATEGORIES'
 const GET_TASKS = '@task-manager/tasks/GET_TASKS'
 const SET_STATUS = '@task-manager/tasks/SET_STATUS'
+const ADD_TASK = '@task-manager/tasks/ADD_TASK'
 
 const initialState = {
   categoriesList: [],
@@ -29,6 +30,13 @@ export default (state = initialState, action = {}) => {
         tasksList: action.tasksArray
       }
     }
+    case ADD_TASK: {
+      return {
+        ...state,
+        tasksList: action.tasksArray
+      }
+    }
+
     default:
       return state
   }
@@ -69,6 +77,22 @@ export function setStatus(category, id, nextStatus) {
         if (typeof data.length !== 'undefined') {
           dispatch({ type: SET_STATUS, tasksArray: data })
         }
+      })
+      .catch((err) => err)
+  }
+}
+
+export function addTask(category, newTask) {
+  return async (dispatch) => {
+    await axios({
+      method: 'post',
+      url: `/api/v1/tasks/${category}`,
+      data: {
+        addTask: newTask
+      }
+    })
+      .then(({ data }) => {
+        dispatch({ type: ADD_TASK, tasksArray: data })
       })
       .catch((err) => err)
   }
