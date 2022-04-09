@@ -61,9 +61,9 @@ const readTask = (category) => {
 }
 
 const calculateTime = (tasks, date) => {
-  const day = 86400000
-  const week = 604800000
-  const month = 18144000000
+  const day = 1000 * 60 * 60 * 24
+  const week = 1000 * 60 * 60 * 24 * 7
+  const month = 1000 * 60 * 60 * 24 * 30
   let time
   if (date === 'day') time = day
   if (date === 'week') time = week

@@ -5,8 +5,8 @@ import { Switch, Route, Redirect, StaticRouter } from 'react-router-dom'
 
 import store, { history } from '../redux'
 
-import Home from '../components/home'
-import DummyView from '../components/dummy-view'
+import Tasks from '../components/tasks'
+import Main from '../components/main'
 import NotFound from '../components/404'
 
 import Startup from './startup'
@@ -48,10 +48,10 @@ const RootComponent = (props) => {
       <RouterSelector history={history} location={props.location} context={props.context}>
         <Startup>
           <Switch>
-            <Route exact path="/" component={DummyView} />
-            <Route exact path="/dashboard" component={Home} />
-            <PrivateRoute exact path="/hidden-route" component={DummyView} />
-            <OnlyAnonymousRoute exact path="/anonymous-route" component={DummyView} />
+            <Route exact path="/" component={Main} />
+            <Route exact path="/:category" component={Tasks} />
+            <PrivateRoute exact path="/hidden-route" component={Main} />
+            <OnlyAnonymousRoute exact path="/anonymous-route" component={Main} />
 
             <Route component={NotFound} />
           </Switch>
