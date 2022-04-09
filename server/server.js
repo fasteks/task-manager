@@ -11,7 +11,7 @@ import config from './config'
 
 import Html from '../client/html'
 
-const { readFile, writeFile } = require('fs').promises
+const { readFile, writeFile, readdir } = require('fs').promises
 
 const shortid = require('shortid')
 
@@ -73,6 +73,13 @@ const calculateTime = (tasks, date) => {
   })
   return tasksSortedByTime
 }
+
+server.get('/api/v1/categories', async (req, res) => {
+  const tasksCategories = await readdir(`${__dirname}/tasks/`, (err, files) => files)
+  const slicedCategories = tasksCategories.map((it) => it.slice(0, it.indexOf('.')))
+  res.json(slicedCategories)
+})
+
 server.get('/api/v1/tasks/:category', async (req, res) => {
   const { category } = req.params
   const tasks = await readTask(category)
