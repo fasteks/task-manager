@@ -42,7 +42,20 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
           )}
           {categoriesList.map((it, index) => {
             return (
-              <Link to={`/${it}`} key={index} title={it} className="p-2">
+              <Link
+                to={`/${it}`}
+                key={index}
+                title={it}
+                className="p-2"
+                onClick={(e) => {
+                  if (!isMain) {
+                    setHidden(false)
+                  }
+                  if (location.pathname === `/${it}`) {
+                    e.preventDefault()
+                  }
+                }}
+              >
                 {it}
               </Link>
             )
@@ -97,7 +110,7 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
             Month
           </button>
           <button
-            className="p-2 text-center"
+            className="p-2 text-center italic text-neutral-500"
             type="button"
             onClick={() => {
               setHidden(!hidden)
