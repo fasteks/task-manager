@@ -83,6 +83,14 @@ server.get('/api/v1/categories', async (req, res) => {
   res.json(slicedCategories)
 })
 
+server.post('/api/v1/categories', async (req, res) => {
+  const { category } = req.body
+  await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify([]), 'utf-8')
+  const tasksCategories = await readdir(`${__dirname}/tasks/`, (err, files) => files)
+  const slicedCategories = tasksCategories.map((it) => it.slice(0, it.indexOf('.')))
+  res.json(slicedCategories)
+})
+
 server.get('/api/v1/tasks/:category', async (req, res) => {
   const { category } = req.params
   const tasks = await readTask(category)

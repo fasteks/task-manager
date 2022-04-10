@@ -16,21 +16,20 @@ const Tasks = () => {
 
   useEffect(() => {
     dispatch(getTasks(category))
-  }, [])
+  }, [category])
 
   return (
-    <div className="flex flex-col h-screen bg-gray-500">
+    <div className="h-screen flex flex-col bg-gray-500">
       <Head title={category} />
       <Header category={category} />
-      <div className="flex items-center justify-center text-center">
-        <div className="flex flex-col flex-wrap items-center justify-between p-5 border-4 border-emerald-600 bg-neutral-800">
+      <div className="h-full flex items-center justify-center text-center">
+        <div className="max-w-fit flex flex-col flex-wrap items-center justify-between border-4 border-emerald-600 bg-neutral-800">
           <TaskAdd category={category} />
           <div className="flex flex-wrap justify-center">
             {tasksList.map((it) => {
               return <Task key={it.taskId} taskObj={it} category={category} />
             })}
           </div>
-          <TaskAdd category={category} />
         </div>
       </div>
     </div>
