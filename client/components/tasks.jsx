@@ -21,15 +21,16 @@ const Tasks = () => {
   return (
     <div className="flex flex-col h-screen">
       <Head title={category} />
-      <Header />
-      <div className="flex items-center justify-center h-full text-center bg-contain bg-gray-500">
-        <div className="flex flex-col flex-wrap items-center justify-between p-5 border-4 border-emerald-600 rounded-3xl bg-neutral-800">
+      <Header category={category} />
+      <div className="flex items-center justify-center text-center bg-contain bg-gray-500">
+        <div className="flex flex-col flex-wrap items-center justify-between p-5 border-4 border-emerald-600 bg-neutral-800">
           <TaskAdd category={category} />
           <div className="flex flex-wrap justify-center">
             {tasksList.map((it) => {
               return <Task key={it.taskId} taskObj={it} category={category} />
             })}
           </div>
+          <TaskAdd category={category} />
         </div>
       </div>
     </div>

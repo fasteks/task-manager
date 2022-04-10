@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
-import { getCategories } from '../redux/reducers/tasks'
+// import { CENTURY, DAY, MONTH, WEEK } from '../../server/server'
+import { getCategories, setTimespan } from '../redux/reducers/tasks'
 
-const Header = () => {
+const Header = ({ category }) => {
   const dispatch = useDispatch()
+  const location = useLocation()
+  const isMain = location.pathname === '/'
   const { categoriesList } = useSelector((s) => s.tasks)
   const isCategoryList = categoriesList.length === 0
-
   useEffect(() => {
     dispatch(getCategories())
   }, [])
@@ -16,22 +18,63 @@ const Header = () => {
   return (
     <div className="flex justify-center items-center min-w-full p-4 text-white font-semibold bg-neutral-800">
       {!isCategoryList ? (
-        <div className="flex flex-wrap justify-center grow">
-          <Link to="/" className="p-1 text-center">
-            Choose tasks category:
+        <div className="flex flex-wrap justify-center items-center grow">
+          <Link to="/" className="p-2 text-center">
+            Category:
           </Link>
           {categoriesList.map((it, index) => {
             return (
-              <Link to={`/${it}`} key={index} title={it} className="p-1">
+              <Link to={`/${it}`} key={index} title={it} className="p-2">
                 {it}
               </Link>
             )
           })}
         </div>
       ) : (
-        <Link to="/" className="p-1 text-center">
+        <Link to="/" className="p-2 text-center">
           There are no available categories!
         </Link>
+      )}
+      {!isMain && (
+        <div className="flex flex-wrap justify-center items-center grow">
+          Show:
+          <button
+            type="button"
+            className="ml-2 p-2 text-center"
+            onClick={() => {
+              dispatch(setTimespan(category, 'century'))
+            }}
+          >
+            All
+          </button>
+          <button
+            type="button"
+            className="p-2 text-center"
+            onClick={() => {
+              dispatch(setTimespan(category, 'day'))
+            }}
+          >
+            Day
+          </button>
+          <button
+            type="button"
+            className="p-2 text-center"
+            onClick={() => {
+              dispatch(setTimespan(category, 'month'))
+            }}
+          >
+            Week
+          </button>
+          <button
+            className="p-2 text-center"
+            type="button"
+            onClick={() => {
+              dispatch(setTimespan(category, 'week'))
+            }}
+          >
+            Month
+          </button>
+        </div>
       )}
     </div>
   )

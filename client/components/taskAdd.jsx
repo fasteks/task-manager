@@ -22,6 +22,7 @@ const TaskAdd = ({ category }) => {
         className="px-1 text-white"
         onClick={() => {
           if (text.length > 1) {
+            setText('')
             dispatch(addTask(category, text))
           }
         }}
