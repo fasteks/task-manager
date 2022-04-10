@@ -8,7 +8,7 @@ const ButtonSingle = ({ category, nextStatus, id }) => {
   return (
     <button
       type="button"
-      className="p-2 rounded-md bg-neutral-800"
+      className="p-0.5 rounded-md bg-neutral-800"
       onClick={() => {
         dispatch(setStatus(category, id, nextStatus))
       }}
@@ -24,7 +24,7 @@ const ButtonGroup = ({ category, nextStatusFirst, nextStatusSecond, id }) => {
     <>
       <button
         type="button"
-        className="p-2 rounded-md bg-neutral-800"
+        className="p-0.5 rounded-md bg-neutral-800"
         onClick={() => {
           dispatch(setStatus(category, id, nextStatusFirst))
         }}
@@ -33,7 +33,7 @@ const ButtonGroup = ({ category, nextStatusFirst, nextStatusSecond, id }) => {
       </button>
       <button
         type="button"
-        className="p-2 rounded-md bg-neutral-800"
+        className="p-0.5 rounded-md bg-neutral-800"
         onClick={() => {
           dispatch(setStatus(category, id, nextStatusSecond))
         }}
@@ -55,34 +55,38 @@ const Task = ({ taskObj, category }) => {
 
   return (
     <div className="flex flex-col justify-between h-52 w-44 m-1 p-3 text-white text-md font-semibold border-2 border-collapse rounded-3xl bg-emerald-600">
-      <div className="flex flex-wrap justify-between">
-        <p>{taskObj.status}</p>
+      <div className="flex flex-wrap items-center justify-between">
+        <p className="p-0.5 text-black rounded-md bg-white">{taskObj.status}</p>
         {!insert && (
           <button
             type="button"
+            className="text-yellow-400"
             onClick={() => {
               setInsert(!insert)
             }}
           >
-            Edit
+            <i className="far fa-edit" style={{ fontSize: '20px' }} />
           </button>
         )}
         {insert && (
           <button
             type="button"
+            className="text-sky-300"
             onClick={() => {
               setInsert(!insert)
               dispatch(changeTitle(category, taskObj.taskId, text))
             }}
           >
-            Save
+            <i className="far fa-check-square" style={{ fontSize: '24px' }} />
           </button>
         )}
       </div>
-      {!insert && <span className="flex flex-wrap justify-center">Title: {taskObj.title}</span>}
+      {!insert && (
+        <span className="flex flex-wrap justify-center text-lg">Title: {taskObj.title}</span>
+      )}
       {insert && (
         <input
-          className="text-black"
+          className="text-black text-lg"
           value={text || taskObj.title}
           onChange={(e) => {
             setText(e.target.value)
