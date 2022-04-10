@@ -11,7 +11,7 @@ import config from './config'
 
 import Html from '../client/html'
 
-const { readFile, writeFile, readdir } = require('fs').promises
+const { readFile, writeFile, readdir, unlink } = require('fs').promises
 
 const shortid = require('shortid')
 
@@ -88,6 +88,19 @@ server.post('/api/v1/categories', async (req, res) => {
   await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify([]), 'utf-8')
   const tasksCategories = await readdir(`${__dirname}/tasks/`, (err, files) => files)
   const slicedCategories = tasksCategories.map((it) => it.slice(0, it.indexOf('.')))
+  res.json(slicedCategories)
+})
+
+server.delete('/api/v1/:category', async (req, res) => {
+  const { category } = req.params
+  const tasksCategories = await readdir(`${__dirname}/tasks/`, (err, files) => files)
+  tasksCategories.forEach(async (it) => {
+    if (it === `${category}.json`) {
+      await unlink(`${__dirname}/tasks/${it}`)
+    }
+  })
+  const categories = await readdir(`${__dirname}/tasks/`, (err, files) => files)
+  const slicedCategories = categories.map((it) => it.slice(0, it.indexOf('.')))
   res.json(slicedCategories)
 })
 

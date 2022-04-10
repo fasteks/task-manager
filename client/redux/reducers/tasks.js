@@ -5,6 +5,7 @@ const GET_TASKS = '@task-manager/tasks/GET_TASKS'
 const SET_STATUS = '@task-manager/tasks/SET_STATUS'
 const ADD_TASK = '@task-manager/tasks/ADD_TASK'
 const ADD_CATEGORY = '@task-manager/tasks/ADD_CATEGORY'
+const DELETE_CATEGORY = '@task-manager/tasks/DELETE_CATEGORY'
 const DELETE_TASK = '@task-manager/tasks/DELETE_TASK'
 const SET_TITLE = '@task-manager/tasks/SET_TITLE'
 const SET_TIMESPAN = '@task-manager/tasks/SET_TIMESPAN'
@@ -62,6 +63,12 @@ export default (state = initialState, action = {}) => {
       }
     }
     case ADD_CATEGORY: {
+      return {
+        ...state,
+        categoriesList: action.categoriesArray
+      }
+    }
+    case DELETE_CATEGORY: {
       return {
         ...state,
         categoriesList: action.categoriesArray
@@ -191,6 +198,19 @@ export function addCategory(category) {
     })
       .then(({ data }) => {
         dispatch({ type: ADD_CATEGORY, categoriesArray: data })
+      })
+      .catch((err) => err)
+  }
+}
+
+export function deleteCategory(category) {
+  return async (dispatch) => {
+    await axios({
+      method: 'delete',
+      url: `/api/v1/${category}`
+    })
+      .then(({ data }) => {
+        dispatch({ type: DELETE_CATEGORY, categoriesArray: data })
       })
       .catch((err) => err)
   }

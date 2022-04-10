@@ -5,23 +5,41 @@ import { Link, useLocation } from 'react-router-dom'
 // import { CENTURY, DAY, MONTH, WEEK } from '../../server/server'
 import { getCategories, setTimespan } from '../redux/reducers/tasks'
 
-const Header = ({ category, hidden, setHidden }) => {
+const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
   const dispatch = useDispatch()
   const location = useLocation()
   const isMain = location.pathname === '/'
   const { categoriesList } = useSelector((s) => s.tasks)
   const isCategoryList = categoriesList.length === 0
+
   useEffect(() => {
     dispatch(getCategories())
   }, [])
 
   return (
-    <div className="flex justify-center items-center min-w-full p-4 text-white font-semibold bg-neutral-800">
+    <div className="relative flex justify-center items-center min-w-full p-4 text-white font-semibold bg-neutral-800">
+      {isMain && (
+        <button
+          type="button"
+          className="absolute right-3/4 italic font-thin text-neutral-500"
+          onClick={() => {
+            setDel(!isDel)
+          }}
+        >
+          del
+        </button>
+      )}
       {!isCategoryList ? (
         <div className="flex flex-wrap justify-center items-center grow">
-          <Link to="/" className="p-2 text-center">
-            Category:
-          </Link>
+          {isMain ? (
+            <div to="/" className="p-2 text-center">
+              Category:
+            </div>
+          ) : (
+            <Link to="/" className="p-2 text-center">
+              Category:
+            </Link>
+          )}
           {categoriesList.map((it, index) => {
             return (
               <Link to={`/${it}`} key={index} title={it} className="p-2">
