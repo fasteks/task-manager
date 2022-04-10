@@ -89,9 +89,7 @@ server.get('/api/v1/tasks/:category', async (req, res) => {
   const sortedTasks = tasks.reduce((acc, rec) => {
     delete rec._createdAt
     delete rec._deletedAt
-    if (!rec._isDeleted) {
-      delete rec._isDeleted
-    }
+    delete rec._isDeleted
     return [...acc, rec]
   }, [])
   res.json(sortedTasks)
@@ -101,15 +99,23 @@ server.get('/api/v1/tasks/:category/:timespan', async (req, res) => {
   const { category, timespan } = req.params
   const tasks = await readTask(category)
   const tasksSortedByTime = await calculateTime(tasks, timespan)
-  const tasksOutput = tasksSortedByTime.reduce((acc, rec) => {
+  if (timespan === 'century') {
+    const tasksOutput = tasksSortedByTime.reduce((acc, rec) => {
+      delete rec._createdAt
+      delete rec._deletedAt
+      delete rec._isDeleted
+      return [...acc, rec]
+    }, [])
+    return res.json(tasksOutput)
+  }
+  const sortingFromDeleted = tasksSortedByTime.filter((it) => !it._isDeleted)
+  const tasksOutput = sortingFromDeleted.reduce((acc, rec) => {
     delete rec._createdAt
     delete rec._deletedAt
-    if (!rec._isDeleted) {
-      delete rec._isDeleted
-    }
+    delete rec._isDeleted
     return [...acc, rec]
   }, [])
-  res.json(tasksOutput)
+  return res.json(tasksOutput)
 })
 
 server.post('/api/v1/tasks/:category', async (req, res) => {
@@ -118,12 +124,11 @@ server.post('/api/v1/tasks/:category', async (req, res) => {
   const tasks = await readTask(category)
   const updatedTasks = [...tasks, setNewTaskObj(addTask)]
   await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify(updatedTasks), 'utf-8')
-  const tasksOutput = updatedTasks.reduce((acc, rec) => {
+  const sortingFromDeleted = updatedTasks.filter((it) => !it._isDeleted)
+  const tasksOutput = sortingFromDeleted.reduce((acc, rec) => {
     delete rec._createdAt
     delete rec._deletedAt
-    if (!rec._isDeleted) {
-      delete rec._isDeleted
-    }
+    delete rec._isDeleted
     return [...acc, rec]
   }, [])
   res.json(tasksOutput)
@@ -144,12 +149,11 @@ server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
     return it
   })
   await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify(tasksUpdate), 'utf-8')
-  const tasksOutput = tasksUpdate.reduce((acc, rec) => {
+  const sortingFromDeleted = tasksUpdate.filter((it) => !it._isDeleted)
+  const tasksOutput = sortingFromDeleted.reduce((acc, rec) => {
     delete rec._createdAt
     delete rec._deletedAt
-    if (!rec._isDeleted) {
-      delete rec._isDeleted
-    }
+    delete rec._isDeleted
     return [...acc, rec]
   }, [])
   return res.json(tasksOutput)
@@ -166,12 +170,11 @@ server.patch('/api/v1/tasks/:category', async (req, res) => {
     return it
   })
   await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify(tasksUpdate), 'utf-8')
-  const tasksOutput = tasksUpdate.reduce((acc, rec) => {
+  const sortingFromDeleted = tasksUpdate.filter((it) => !it._isDeleted)
+  const tasksOutput = sortingFromDeleted.reduce((acc, rec) => {
     delete rec._createdAt
     delete rec._deletedAt
-    if (!rec._isDeleted) {
-      delete rec._isDeleted
-    }
+    delete rec._isDeleted
     return [...acc, rec]
   }, [])
   return res.json(tasksOutput)
@@ -187,12 +190,11 @@ server.delete('/api/v1/tasks/:category/:id', async (req, res) => {
     return it
   })
   await writeFile(`${__dirname}/tasks/${category}.json`, JSON.stringify(tasksDeleted), 'utf-8')
-  const tasksOutput = tasksDeleted.reduce((acc, rec) => {
+  const sortingFromDeleted = tasksDeleted.filter((it) => !it._isDeleted)
+  const tasksOutput = sortingFromDeleted.reduce((acc, rec) => {
     delete rec._createdAt
     delete rec._deletedAt
-    if (!rec._isDeleted) {
-      delete rec._isDeleted
-    }
+    delete rec._isDeleted
     return [...acc, rec]
   }, [])
   res.json(tasksOutput)

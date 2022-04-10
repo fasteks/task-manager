@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { changeTitle, setStatus } from '../redux/reducers/tasks'
+import { changeTitle, deleteTask, setStatus } from '../redux/reducers/tasks'
 
 const ButtonSingle = ({ category, nextStatus, id }) => {
   const dispatch = useDispatch()
@@ -52,34 +52,45 @@ const Task = ({ taskObj, category }) => {
   const DONE = 'done'
   const PROGRESS = 'in progress'
   const BLOCKED = 'blocked'
-
   return (
     <div className="flex flex-col justify-between h-52 w-44 m-1 p-3 text-white text-md font-semibold border-2 border-collapse rounded-3xl bg-emerald-600">
       <div className="flex flex-wrap items-center justify-between">
         <p className="p-0.5 text-black rounded-md bg-white">{taskObj.status}</p>
-        {!insert && (
+        <div className="">
+          {!insert && (
+            <button
+              type="button"
+              className="text-yellow-400"
+              onClick={() => {
+                setInsert(!insert)
+                setText(taskObj.title)
+              }}
+            >
+              <i className="far fa-edit" style={{ fontSize: '20px' }} />
+            </button>
+          )}
+          {insert && (
+            <button
+              type="button"
+              className="text-sky-300"
+              onClick={() => {
+                setInsert(!insert)
+                dispatch(changeTitle(category, taskObj.taskId, text))
+              }}
+            >
+              <i className="far fa-check-square" style={{ fontSize: '24px' }} />
+            </button>
+          )}
           <button
             type="button"
-            className="text-yellow-400"
+            className="ml-0.5 text-red-400"
             onClick={() => {
-              setInsert(!insert)
+              dispatch(deleteTask(category, taskObj.taskId))
             }}
           >
-            <i className="far fa-edit" style={{ fontSize: '20px' }} />
+            <i className="far fa-eye-slash" style={{ fontSize: '20px' }} />
           </button>
-        )}
-        {insert && (
-          <button
-            type="button"
-            className="text-sky-300"
-            onClick={() => {
-              setInsert(!insert)
-              dispatch(changeTitle(category, taskObj.taskId, text))
-            }}
-          >
-            <i className="far fa-check-square" style={{ fontSize: '24px' }} />
-          </button>
-        )}
+        </div>
       </div>
       {!insert && (
         <span className="flex flex-wrap justify-center text-lg">Title: {taskObj.title}</span>
@@ -87,7 +98,7 @@ const Task = ({ taskObj, category }) => {
       {insert && (
         <input
           className="text-black text-lg"
-          value={text || taskObj.title}
+          value={text}
           onChange={(e) => {
             setText(e.target.value)
           }}

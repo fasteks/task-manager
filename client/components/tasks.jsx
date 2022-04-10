@@ -19,10 +19,10 @@ const Tasks = () => {
   }, [])
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen bg-gray-500">
       <Head title={category} />
       <Header category={category} />
-      <div className="flex items-center justify-center text-center bg-contain bg-gray-500">
+      <div className="flex items-center justify-center text-center">
         <div className="flex flex-col flex-wrap items-center justify-between p-5 border-4 border-emerald-600 bg-neutral-800">
           <TaskAdd category={category} />
           <div className="flex flex-wrap justify-center">
