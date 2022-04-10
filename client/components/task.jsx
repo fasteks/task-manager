@@ -83,7 +83,7 @@ const Task = ({ taskObj, category }) => {
           )}
           <button
             type="button"
-            className="ml-0.5 text-red-400"
+            className="ml-0.5 text-red-300"
             onClick={() => {
               dispatch(deleteTask(category, taskObj.taskId))
             }}
@@ -92,9 +92,7 @@ const Task = ({ taskObj, category }) => {
           </button>
         </div>
       </div>
-      {!insert && (
-        <span className="flex flex-wrap justify-center text-lg">Title: {taskObj.title}</span>
-      )}
+      {!insert && <span className="flex flex-wrap justify-center text-lg">{taskObj.title}</span>}
       {insert && (
         <input
           className="text-black text-lg"

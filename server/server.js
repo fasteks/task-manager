@@ -94,28 +94,31 @@ server.post('/api/v1/categories', async (req, res) => {
 server.get('/api/v1/tasks/:category', async (req, res) => {
   const { category } = req.params
   const tasks = await readTask(category)
-  const sortedTasks = tasks.reduce((acc, rec) => {
+  const sortingFromDeleted = tasks.filter((it) => !it._isDeleted)
+  const sortedTasks = sortingFromDeleted.reduce((acc, rec) => {
     delete rec._createdAt
     delete rec._deletedAt
     delete rec._isDeleted
     return [...acc, rec]
   }, [])
-  res.json(sortedTasks)
+  const sortingFromDeletedHidden = tasks.filter((it) => it._isDeleted)
+  const tasksOutputHidden = sortingFromDeletedHidden.reduce((acc, rec) => {
+    delete rec._createdAt
+    delete rec._deletedAt
+    delete rec._isDeleted
+    return [...acc, rec]
+  }, [])
+  const data = {
+    sortedTasks,
+    tasksOutputHidden
+  }
+  res.json(data)
 })
 
 server.get('/api/v1/tasks/:category/:timespan', async (req, res) => {
   const { category, timespan } = req.params
   const tasks = await readTask(category)
   const tasksSortedByTime = await calculateTime(tasks, timespan)
-  if (timespan === 'century') {
-    const tasksOutput = tasksSortedByTime.reduce((acc, rec) => {
-      delete rec._createdAt
-      delete rec._deletedAt
-      delete rec._isDeleted
-      return [...acc, rec]
-    }, [])
-    return res.json(tasksOutput)
-  }
   const sortingFromDeleted = tasksSortedByTime.filter((it) => !it._isDeleted)
   const tasksOutput = sortingFromDeleted.reduce((acc, rec) => {
     delete rec._createdAt
@@ -193,7 +196,7 @@ server.delete('/api/v1/tasks/:category/:id', async (req, res) => {
   const tasks = await readTask(category)
   const tasksDeleted = tasks.map((it) => {
     if (it.taskId === id) {
-      return { ...it, _isDeleted: true }
+      return { ...it, _isDeleted: !it._isDeleted }
     }
     return it
   })
@@ -205,7 +208,18 @@ server.delete('/api/v1/tasks/:category/:id', async (req, res) => {
     delete rec._isDeleted
     return [...acc, rec]
   }, [])
-  res.json(tasksOutput)
+  const sortingFromDeletedHidden = tasksDeleted.filter((it) => it._isDeleted)
+  const tasksOutputHidden = sortingFromDeletedHidden.reduce((acc, rec) => {
+    delete rec._createdAt
+    delete rec._deletedAt
+    delete rec._isDeleted
+    return [...acc, rec]
+  }, [])
+  const data = {
+    tasksOutput,
+    tasksOutputHidden
+  }
+  res.json(data)
 })
 
 server.use('/api/', (req, res) => {

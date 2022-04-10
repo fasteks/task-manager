@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom'
 // import { CENTURY, DAY, MONTH, WEEK } from '../../server/server'
 import { getCategories, setTimespan } from '../redux/reducers/tasks'
 
-const Header = ({ category }) => {
+const Header = ({ category, hidden, setHidden }) => {
   const dispatch = useDispatch()
   const location = useLocation()
   const isMain = location.pathname === '/'
@@ -42,6 +42,7 @@ const Header = ({ category }) => {
             type="button"
             className="ml-2 p-2 text-center"
             onClick={() => {
+              setHidden(false)
               dispatch(setTimespan(category, 'century'))
             }}
           >
@@ -51,6 +52,7 @@ const Header = ({ category }) => {
             type="button"
             className="p-2 text-center"
             onClick={() => {
+              setHidden(false)
               dispatch(setTimespan(category, 'day'))
             }}
           >
@@ -60,6 +62,7 @@ const Header = ({ category }) => {
             type="button"
             className="p-2 text-center"
             onClick={() => {
+              setHidden(false)
               dispatch(setTimespan(category, 'month'))
             }}
           >
@@ -69,10 +72,20 @@ const Header = ({ category }) => {
             className="p-2 text-center"
             type="button"
             onClick={() => {
+              setHidden(false)
               dispatch(setTimespan(category, 'week'))
             }}
           >
             Month
+          </button>
+          <button
+            className="p-2 text-center"
+            type="button"
+            onClick={() => {
+              setHidden(!hidden)
+            }}
+          >
+            Hidden
           </button>
         </div>
       )}

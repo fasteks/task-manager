@@ -11,7 +11,8 @@ const SET_TIMESPAN = '@task-manager/tasks/SET_TIMESPAN'
 
 const initialState = {
   categoriesList: [],
-  tasksList: []
+  tasksList: [],
+  hiddenList: []
 }
 
 export default (state = initialState, action = {}) => {
@@ -25,7 +26,8 @@ export default (state = initialState, action = {}) => {
     case GET_TASKS: {
       return {
         ...state,
-        tasksList: action.tasksArray
+        tasksList: action.tasksArray,
+        hiddenList: action.listOfHidden
       }
     }
     case SET_STATUS: {
@@ -55,7 +57,8 @@ export default (state = initialState, action = {}) => {
     case DELETE_TASK: {
       return {
         ...state,
-        tasksList: action.tasksArray
+        tasksList: action.tasksArray,
+        hiddenList: action.listOfHidden
       }
     }
     case ADD_CATEGORY: {
@@ -85,7 +88,11 @@ export function getTasks(category) {
     await axios
       .get(`/api/v1/tasks/${category}`)
       .then(({ data }) => {
-        dispatch({ type: GET_TASKS, tasksArray: data })
+        dispatch({
+          type: GET_TASKS,
+          tasksArray: data.sortedTasks,
+          listOfHidden: data.tasksOutputHidden
+        })
       })
       .catch((err) => err)
   }
@@ -162,7 +169,12 @@ export function deleteTask(category, id) {
       url: `/api/v1/tasks/${category}/${id}`
     })
       .then(({ data }) => {
-        dispatch({ type: DELETE_TASK, tasksArray: data })
+        dispatch({
+          type: DELETE_TASK,
+          tasksArray: data.tasksOutput,
+          listOfHidden: data.tasksOutputHidden
+        })
+        // dispatch({ type: DELETE_TASK, tasksArray: data })
       })
       .catch((err) => err)
   }
