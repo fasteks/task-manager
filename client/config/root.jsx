@@ -52,7 +52,6 @@ const RootComponent = (props) => {
             <Route exact path="/:category" component={Tasks} />
             <PrivateRoute exact path="/hidden-route" component={Main} />
             <OnlyAnonymousRoute exact path="/anonymous-route" component={Main} />
-
             <Route component={NotFound} />
           </Switch>
         </Startup>
