@@ -25,7 +25,7 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
 
   return (
     <div className="min-w-fit flex justify-center items-center min-w-full p-4 text-white font-semibold bg-neutral-800">
-      {isMain && (
+      {isMain && !isCategoryList && (
         <button
           type="button"
           className="italic font-thin text-neutral-500"
@@ -69,9 +69,7 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
           })}
         </div>
       ) : (
-        <Link to="/" className="p-2 text-center">
-          There is no available categories!
-        </Link>
+        <p className="p-2 text-center">There is no available categories!</p>
       )}
       {!isMain && (
         <div className="flex flex-wrap justify-center items-center grow">

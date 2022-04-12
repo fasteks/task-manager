@@ -43,7 +43,7 @@ const Main = () => {
               <FontAwesomeIcon icon={faCheck} className="text-3xl" />
             </button>
           </div>
-          {isDel && <CategoryDelete />}
+          {isDel && <CategoryDelete isDel={isDel} setDel={setDel} />}
         </div>
       </div>
     </div>

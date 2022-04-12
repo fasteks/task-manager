@@ -6,10 +6,11 @@ import { faMinus } from '@fortawesome/free-solid-svg-icons'
 
 import { deleteCategory } from '../../redux/reducers/categories'
 
-const CategoryDelete = () => {
+const CategoryDelete = ({ isDel, setDel }) => {
   const dispatch = useDispatch()
   const [text, setText] = useState('')
   const { categoriesList } = useSelector((s) => s.categories)
+  const isCatergory = categoriesList.length !== 0
 
   const isCategoryOnList = (str) => {
     return categoriesList.includes(str)
@@ -32,8 +33,9 @@ const CategoryDelete = () => {
         type="button"
         className="ml-0.5 p-1 text-red-500 rounded-md"
         onClick={() => {
-          if (text.length > 1 && isCategoryOnList(text)) {
+          if (text.length > 1 && isCategoryOnList(text) && isCatergory) {
             setText('')
+            setDel(!isDel)
             dispatch(deleteCategory(text))
           } else {
             setText('wrong')
