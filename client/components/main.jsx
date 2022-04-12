@@ -15,11 +15,11 @@ const Main = () => {
   const [text, setText] = useState('')
   const [isDel, setDel] = useState(false)
   return (
-    <div className="min-h-screen flex flex-col bg-gray-500">
+    <div className="min-h-screen flex flex-col flex-wrap bg-gray-500">
       <Head title="Tasks" />
       <Header isDel={isDel} setDel={setDel} />
-      <div className="my-auto h-full flex flex-col justify-center items-center">
-        <div className="flex flex-col justify-center items-center p-5 rounded-md bg-neutral-800">
+      <div className="my-auto h-full flex flex-col justify-center items-center flex-wrap">
+        <div className="flex flex-col justify-center items-center flex-wrap p-5 rounded-md bg-neutral-800">
           <div className="p-1 text-white text-xl">set category:</div>
           <div className="flex justify-center items-center">
             <input

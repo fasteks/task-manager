@@ -17,7 +17,7 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
   }, [])
 
   return (
-    <div className="min-h-min flex justify-center items-center min-w-full p-4 text-white font-semibold bg-neutral-800">
+    <div className="min-w-fit flex justify-center items-center min-w-full p-4 text-white font-semibold bg-neutral-800">
       {isMain && (
         <button
           type="button"
