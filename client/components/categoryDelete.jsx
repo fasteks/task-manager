@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMinus } from '@fortawesome/free-solid-svg-icons'
 import { deleteCategory } from '../redux/reducers/tasks'
 
 const CategoryDelete = () => {
@@ -39,7 +41,7 @@ const CategoryDelete = () => {
           }
         }}
       >
-        <i className="p-1 fas fa-minus" style={{ fontSize: '28px' }} />
+        <FontAwesomeIcon icon={faMinus} className="p-1 text-4xl" />
       </button>
     </div>
   )

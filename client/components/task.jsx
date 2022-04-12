@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faCheckSquare, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+
 import { changeTitle, deleteTask, setStatus } from '../redux/reducers/tasks'
 
 const ButtonSingle = ({ category, nextStatus, id }) => {
@@ -53,10 +56,10 @@ const Task = ({ taskObj, category }) => {
   const PROGRESS = 'in progress'
   const BLOCKED = 'blocked'
   return (
-    <div className="flex flex-col justify-between h-52 w-44 m-1 p-3 text-white text-md font-semibold border-2 border-collapse rounded-3xl bg-emerald-600">
+    <div className="flex flex-col justify-between h-52 w-48 m-1 p-3 text-white text-md font-semibold border-2 border-collapse rounded-3xl bg-emerald-600">
       <div className="flex flex-wrap items-center justify-between">
         <p className="p-0.5 text-black rounded-md bg-white">{taskObj.status}</p>
-        <div className="">
+        <div className="flex items-center">
           {!insert && (
             <button
               type="button"
@@ -66,7 +69,7 @@ const Task = ({ taskObj, category }) => {
                 setText(taskObj.title)
               }}
             >
-              <i className="far fa-edit" style={{ fontSize: '20px' }} />
+              <FontAwesomeIcon icon={faEdit} className="p-1 text-2xl" />
             </button>
           )}
           {insert && (
@@ -78,17 +81,17 @@ const Task = ({ taskObj, category }) => {
                 dispatch(changeTitle(category, taskObj.taskId, text))
               }}
             >
-              <i className="far fa-check-square" style={{ fontSize: '24px' }} />
+              <FontAwesomeIcon icon={faCheckSquare} className="p-1 text-2xl" />
             </button>
           )}
           <button
             type="button"
-            className="ml-0.5 text-red-300"
+            className="ml-0.5 text-rose-300"
             onClick={() => {
               dispatch(deleteTask(category, taskObj.taskId))
             }}
           >
-            <i className="far fa-eye-slash" style={{ fontSize: '20px' }} />
+            <FontAwesomeIcon icon={faEyeSlash} className="p-1 text-2xl" />
           </button>
         </div>
       </div>

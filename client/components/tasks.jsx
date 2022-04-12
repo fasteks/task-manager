@@ -5,10 +5,11 @@ import { useParams } from 'react-router-dom'
 import Header from './header'
 import Head from './head'
 
-import { getTasks } from '../redux/reducers/tasks'
 import Task from './task'
 import TaskAdd from './taskAdd'
 import Hidden from './hidden'
+
+import { getTasks } from '../redux/reducers/tasks'
 
 const Tasks = () => {
   const dispatch = useDispatch()

@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+
 import Head from './head'
 import Header from './header'
 import CategoryDelete from './categoryDelete'
@@ -37,7 +40,7 @@ const Main = () => {
                 }
               }}
             >
-              <i className="p-1 fas fa-check" style={{ fontSize: '25px' }} />
+              <FontAwesomeIcon icon={faCheck} className="p-1 text-4xl" />
             </button>
           </div>
           {isDel && <CategoryDelete />}

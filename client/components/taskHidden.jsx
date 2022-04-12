@@ -1,6 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
+
 import { deleteTask } from '../redux/reducers/tasks'
 
 const TaskHidden = ({ taskObj, category }) => {
@@ -15,7 +18,7 @@ const TaskHidden = ({ taskObj, category }) => {
             dispatch(deleteTask(category, taskObj.taskId))
           }}
         >
-          <i className="far fa-eye" style={{ fontSize: '20px' }} />
+          <FontAwesomeIcon icon={faEye} className="p-1 text-2xl" />
         </button>
       </div>
       <p className="flex flex-wrap justify-center mt-10 text-lg">{taskObj.title}</p>
