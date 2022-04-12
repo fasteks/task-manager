@@ -67,4 +67,5 @@ dist
 yarn-error.log
 *.csv
 
-server/tasks
+server/tasks/*
+server/tasks/
