@@ -25,6 +25,9 @@ const CategoryDelete = () => {
         type="text"
         className="text-black text-lg"
         value={text}
+        onClick={() => {
+          setText('')
+        }}
         onChange={(e) => {
           setText(e.target.value)
         }}
@@ -41,7 +44,7 @@ const CategoryDelete = () => {
           }
         }}
       >
-        <FontAwesomeIcon icon={faMinus} className="p-1 text-4xl" />
+        <FontAwesomeIcon icon={faMinus} className="text-3xl" />
       </button>
     </div>
   )
