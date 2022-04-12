@@ -24,9 +24,9 @@ const Hidden = ({ category }) => {
           )
         })
       ) : (
-        <div className="flex flex-col text-white">
-          Oh, you found my secret place!
-          <FontAwesomeIcon icon={faGrinBeam} className="text-3xl" />
+        <div className="flex flex-col text-lg font-semibold text-green-600">
+          Oh, you found a secret place!
+          <FontAwesomeIcon icon={faGrinBeam} className="text-yellow-500 text-4xl" />
         </div>
       )}
     </div>

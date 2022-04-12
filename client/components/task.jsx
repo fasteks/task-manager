@@ -56,10 +56,10 @@ const Task = ({ taskObj, category }) => {
   const PROGRESS = 'in progress'
   const BLOCKED = 'blocked'
   return (
-    <div className="flex flex-col justify-between h-52 w-48 m-1 p-3 text-white text-md font-semibold border-2 border-collapse rounded-3xl bg-emerald-600">
+    <div className="min-w-min flex flex-col justify-between h-52 w-48 m-1 p-3 text-white text-md font-semibold border-2 border-collapse rounded-3xl bg-emerald-600">
       <div className="flex flex-wrap items-center justify-between">
         <p className="p-0.5 text-black rounded-md bg-white">{taskObj.status}</p>
-        <div className="flex items-center">
+        <div className="flex flex-wrap items-center">
           {!insert && (
             <button
               type="button"
@@ -95,10 +95,10 @@ const Task = ({ taskObj, category }) => {
           </button>
         </div>
       </div>
-      {!insert && <span className="flex flex-wrap justify-center text-lg">{taskObj.title}</span>}
+      {!insert && <span className="flex justify-center truncate text-lg">{taskObj.title}</span>}
       {insert && (
         <input
-          className="text-black text-lg"
+          className="flex text-black text-lg"
           value={text}
           onChange={(e) => {
             setText(e.target.value)

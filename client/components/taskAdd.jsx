@@ -8,10 +8,10 @@ const TaskAdd = ({ category }) => {
   const [text, setText] = useState('')
 
   return (
-    <div className="flex p-5">
+    <div className="m-3">
       <input
         type="text"
-        className="mr-2 px-1"
+        className="mr-1 p-1"
         value={text}
         onChange={(e) => {
           setText(e.target.value)
@@ -19,7 +19,7 @@ const TaskAdd = ({ category }) => {
       />
       <button
         type="button"
-        className="px-1 text-white"
+        className="p-1 text-white"
         onClick={() => {
           if (text.length > 1) {
             setText('')

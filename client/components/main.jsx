@@ -34,7 +34,7 @@ const Main = () => {
               type="button"
               className="p-1 text-green-500"
               onClick={() => {
-                if (text.length > 1) {
+                if (text.length > 1 && text.trim() !== '') {
                   setText('')
                   dispatch(addCategory(text))
                 }
