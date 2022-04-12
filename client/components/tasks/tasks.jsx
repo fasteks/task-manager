@@ -7,7 +7,7 @@ import Head from '../head'
 
 import Task from './task'
 import TaskAdd from './taskAdd'
-import Hidden from './hidden'
+import TasksHidden from './tasksHidden'
 
 import { getTasks } from '../../redux/reducers/tasks'
 
@@ -36,7 +36,7 @@ const Tasks = () => {
             </div>
           </div>
         )}
-        {hidden && <Hidden category={category} />}
+        {hidden && <TasksHidden category={category} />}
       </div>
     </div>
   )
