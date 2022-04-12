@@ -61,19 +61,15 @@ const readTask = (category) => {
 }
 
 const calculateTime = (tasks, date) => {
-  const day = 1000 * 60 * 60 * 24
-  const week = 1000 * 60 * 60 * 24 * 7
-  const month = 1000 * 60 * 60 * 24 * 30
-  const century = 1000 * 60 * 60 * 24 * 365 * 100
-  let time
-  if (date === 'day') time = day
-  if (date === 'week') time = week
-  if (date === 'month') time = month
-  if (date === 'century') time = century
-  const tasksSortedByTime = tasks.filter((it) => {
-    return +new Date() - +it._createdAt <= time
+  const timespanObj = {
+    day: 1000 * 60 * 60 * 24,
+    week: 1000 * 60 * 60 * 24 * 7,
+    month: 1000 * 60 * 60 * 24 * 365 * 30,
+    century: 1000 * 60 * 60 * 24 * 365 * 100
+  }
+  return tasks.filter((it) => {
+    return +new Date() - +it._createdAt <= timespanObj[date]
   })
-  return tasksSortedByTime
 }
 
 server.get('/api/v1/categories', async (req, res) => {

@@ -21,7 +21,7 @@ const TaskAdd = ({ category }) => {
         type="button"
         className="p-1 text-white"
         onClick={() => {
-          if (text.length > 1) {
+          if (text.length > 1 && text.trim() !== '') {
             setText('')
             dispatch(addTask(category, text))
           }

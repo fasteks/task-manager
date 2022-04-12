@@ -4,48 +4,9 @@ import { useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faCheckSquare, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
-import { changeTitle, deleteTask, setStatus } from '../redux/reducers/tasks'
+import { changeTitle, deleteTask } from '../redux/reducers/tasks'
 
-const ButtonSingle = ({ category, nextStatus, id }) => {
-  const dispatch = useDispatch()
-  return (
-    <button
-      type="button"
-      className="p-0.5 rounded-md bg-neutral-800"
-      onClick={() => {
-        dispatch(setStatus(category, id, nextStatus))
-      }}
-    >
-      {nextStatus}
-    </button>
-  )
-}
-
-const ButtonGroup = ({ category, nextStatusFirst, nextStatusSecond, id }) => {
-  const dispatch = useDispatch()
-  return (
-    <>
-      <button
-        type="button"
-        className="p-0.5 rounded-md bg-neutral-800"
-        onClick={() => {
-          dispatch(setStatus(category, id, nextStatusFirst))
-        }}
-      >
-        {nextStatusFirst}
-      </button>
-      <button
-        type="button"
-        className="p-0.5 rounded-md bg-neutral-800"
-        onClick={() => {
-          dispatch(setStatus(category, id, nextStatusSecond))
-        }}
-      >
-        {nextStatusSecond}
-      </button>
-    </>
-  )
-}
+import TaskButton from './taskButton'
 
 const Task = ({ taskObj, category }) => {
   const dispatch = useDispatch()
@@ -107,18 +68,16 @@ const Task = ({ taskObj, category }) => {
       )}
       <div className="flex flex-wrap items-center justify-around">
         {taskObj.status === NEW && (
-          <ButtonSingle nextStatus={PROGRESS} category={category} id={taskObj.taskId} />
+          <TaskButton nextStatus={PROGRESS} category={category} id={taskObj.taskId} />
         )}
         {taskObj.status === BLOCKED && (
-          <ButtonSingle nextStatus={PROGRESS} category={category} id={taskObj.taskId} />
+          <TaskButton nextStatus={PROGRESS} category={category} id={taskObj.taskId} />
         )}
         {taskObj.status === PROGRESS && (
-          <ButtonGroup
-            nextStatusFirst={DONE}
-            nextStatusSecond={BLOCKED}
-            category={category}
-            id={taskObj.taskId}
-          />
+          <TaskButton nextStatus={DONE} category={category} id={taskObj.taskId} />
+        )}
+        {taskObj.status === PROGRESS && (
+          <TaskButton nextStatus={BLOCKED} category={category} id={taskObj.taskId} />
         )}
       </div>
     </div>

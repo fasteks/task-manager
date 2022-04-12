@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 
-// import { CENTURY, DAY, MONTH, WEEK } from '../../server/server'
 import { getCategories, setTimespan } from '../redux/reducers/tasks'
 
 const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
@@ -11,6 +10,13 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
   const isMain = location.pathname === '/'
   const { categoriesList } = useSelector((s) => s.tasks)
   const isCategoryList = categoriesList.length === 0
+
+  const timespanObj = {
+    day: 'day',
+    week: 'week',
+    month: 'month',
+    century: 'century'
+  }
 
   useEffect(() => {
     dispatch(getCategories())
@@ -74,7 +80,7 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
             className="ml-2 p-2 text-center"
             onClick={() => {
               setHidden(false)
-              dispatch(setTimespan(category, 'century'))
+              dispatch(setTimespan(category, timespanObj.century))
             }}
           >
             All
@@ -84,7 +90,7 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
             className="p-2 text-center"
             onClick={() => {
               setHidden(false)
-              dispatch(setTimespan(category, 'day'))
+              dispatch(setTimespan(category, timespanObj.day))
             }}
           >
             Day
@@ -94,7 +100,7 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
             className="p-2 text-center"
             onClick={() => {
               setHidden(false)
-              dispatch(setTimespan(category, 'month'))
+              dispatch(setTimespan(category, timespanObj.week))
             }}
           >
             Week
@@ -104,7 +110,7 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
             type="button"
             onClick={() => {
               setHidden(false)
-              dispatch(setTimespan(category, 'week'))
+              dispatch(setTimespan(category, timespanObj.month))
             }}
           >
             Month
