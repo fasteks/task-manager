@@ -17,11 +17,11 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
   }, [])
 
   return (
-    <div className="relative flex justify-center items-center min-w-full p-4 text-white font-semibold bg-neutral-800">
+    <div className="min-h-min flex justify-center items-center min-w-full p-4 text-white font-semibold bg-neutral-800">
       {isMain && (
         <button
           type="button"
-          className="absolute right-3/4 italic font-thin text-neutral-500"
+          className="italic font-thin text-neutral-500"
           onClick={() => {
             setDel(!isDel)
           }}

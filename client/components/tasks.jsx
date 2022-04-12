@@ -22,10 +22,10 @@ const Tasks = () => {
   }, [category])
 
   return (
-    <div className="h-screen flex flex-col bg-gray-500">
+    <div className="min-h-screen flex flex-col bg-gray-500">
       <Head title={category} />
       <Header category={category} hidden={hidden} setHidden={setHidden} />
-      <div className="h-full flex items-center justify-center text-center">
+      <div className="my-auto flex items-center justify-center text-center">
         {!hidden && (
           <div className="max-w-fit flex flex-col flex-wrap items-center justify-between p-3 pb-5 border-4 border-emerald-600 bg-neutral-800">
             <TaskAdd category={category} />
