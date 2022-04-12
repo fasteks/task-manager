@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import Header from './header'
-import Head from './head'
+import Header from '../header'
+import Head from '../head'
 
 import Task from './task'
 import TaskAdd from './taskAdd'
 import Hidden from './hidden'
 
-import { getTasks } from '../redux/reducers/tasks'
+import { getTasks } from '../../redux/reducers/tasks'
 
 const Tasks = () => {
   const dispatch = useDispatch()

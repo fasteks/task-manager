@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 
-import { deleteTask } from '../redux/reducers/tasks'
+import { deleteTask } from '../../redux/reducers/tasks'
 
 const TaskHidden = ({ taskObj, category }) => {
   const dispatch = useDispatch()

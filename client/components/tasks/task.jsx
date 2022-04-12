@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faCheckSquare, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
-import { changeTitle, deleteTask } from '../redux/reducers/tasks'
+import { changeTitle, deleteTask } from '../../redux/reducers/tasks'
 
 import TaskButton from './taskButton'
 

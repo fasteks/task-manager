@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-import { setStatus } from '../redux/reducers/tasks'
+import { setStatus } from '../../redux/reducers/tasks'
 
 const TaskButton = ({ category, nextStatus, id }) => {
   const dispatch = useDispatch()

@@ -4,11 +4,11 @@ import { useDispatch } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
-import Head from './head'
-import Header from './header'
+import Head from '../head'
+import Header from '../header'
 import CategoryDelete from './categoryDelete'
 
-import { addCategory } from '../redux/reducers/tasks'
+import { addCategory } from '../../redux/reducers/tasks'
 
 const Main = () => {
   const dispatch = useDispatch()

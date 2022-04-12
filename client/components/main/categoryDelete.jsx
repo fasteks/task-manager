@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus } from '@fortawesome/free-solid-svg-icons'
-import { deleteCategory } from '../redux/reducers/tasks'
+
+import { deleteCategory } from '../../redux/reducers/tasks'
 
 const CategoryDelete = () => {
   const dispatch = useDispatch()
