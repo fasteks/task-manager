@@ -52,12 +52,11 @@ const setNewTaskObj = (name) => {
 }
 
 const readTask = (category) => {
-  const tasks = readFile(`${__dirname}/tasks/${category}.json`, 'utf-8')
+  return readFile(`${__dirname}/tasks/${category}.json`, 'utf-8')
     .then((text) => {
       return JSON.parse(text)
     })
     .catch(() => [])
-  return tasks
 }
 
 const calculateTime = (tasks, date) => {
@@ -157,7 +156,7 @@ server.patch('/api/v1/tasks/:category/:id', async (req, res) => {
   const { category, id } = req.params
   const { setStatus } = req.body
   const statusArray = ['done', 'new', 'in progress', 'blocked']
-  if (statusArray.indexOf(setStatus) === -1) {
+  if (!statusArray.includes(setStatus)) {
     return res.json({ status: 'error', message: 'incorrect status' })
   }
   const tasks = await readTask(category)
