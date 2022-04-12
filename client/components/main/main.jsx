@@ -8,7 +8,7 @@ import Head from '../head'
 import Header from '../header'
 import CategoryDelete from './categoryDelete'
 
-import { addCategory } from '../../redux/reducers/tasks'
+import { addCategory } from '../../redux/reducers/categories'
 
 const Main = () => {
   const dispatch = useDispatch()

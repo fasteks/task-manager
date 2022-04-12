@@ -2,13 +2,14 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 
-import { getCategories, setTimespan } from '../redux/reducers/tasks'
+import { setTimespan } from '../redux/reducers/tasks'
+import { getCategories } from '../redux/reducers/categories'
 
 const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
   const dispatch = useDispatch()
   const location = useLocation()
   const isMain = location.pathname === '/'
-  const { categoriesList } = useSelector((s) => s.tasks)
+  const { categoriesList } = useSelector((s) => s.categories)
   const isCategoryList = categoriesList.length === 0
 
   const timespanObj = {

@@ -1,29 +1,19 @@
 import axios from 'axios'
 
-const GET_CATEGORIES = '@task-manager/tasks/GET_CATEGORIES'
 const GET_TASKS = '@task-manager/tasks/GET_TASKS'
 const SET_STATUS = '@task-manager/tasks/SET_STATUS'
 const ADD_TASK = '@task-manager/tasks/ADD_TASK'
-const ADD_CATEGORY = '@task-manager/tasks/ADD_CATEGORY'
-const DELETE_CATEGORY = '@task-manager/tasks/DELETE_CATEGORY'
 const DELETE_TASK = '@task-manager/tasks/DELETE_TASK'
 const SET_TITLE = '@task-manager/tasks/SET_TITLE'
 const SET_TIMESPAN = '@task-manager/tasks/SET_TIMESPAN'
 
 const initialState = {
-  categoriesList: [],
   tasksList: [],
   hiddenList: []
 }
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
-    case GET_CATEGORIES: {
-      return {
-        ...state,
-        categoriesList: action.categoriesArray
-      }
-    }
     case GET_TASKS: {
       return {
         ...state,
@@ -62,31 +52,8 @@ export default (state = initialState, action = {}) => {
         hiddenList: action.listOfHidden
       }
     }
-    case ADD_CATEGORY: {
-      return {
-        ...state,
-        categoriesList: action.categoriesArray
-      }
-    }
-    case DELETE_CATEGORY: {
-      return {
-        ...state,
-        categoriesList: action.categoriesArray
-      }
-    }
     default:
       return state
-  }
-}
-
-export function getCategories() {
-  return async (dispatch) => {
-    await axios
-      .get('/api/v1/categories')
-      .then(({ data }) => {
-        dispatch({ type: GET_CATEGORIES, categoriesArray: data })
-      })
-      .catch((err) => err)
   }
 }
 
@@ -181,35 +148,6 @@ export function deleteTask(category, id) {
           tasksArray: data.tasksOutput,
           listOfHidden: data.tasksOutputHidden
         })
-      })
-      .catch((err) => err)
-  }
-}
-
-export function addCategory(category) {
-  return async (dispatch) => {
-    await axios({
-      method: 'post',
-      url: '/api/v1/categories',
-      data: {
-        category
-      }
-    })
-      .then(({ data }) => {
-        dispatch({ type: ADD_CATEGORY, categoriesArray: data })
-      })
-      .catch((err) => err)
-  }
-}
-
-export function deleteCategory(category) {
-  return async (dispatch) => {
-    await axios({
-      method: 'delete',
-      url: `/api/v1/${category}`
-    })
-      .then(({ data }) => {
-        dispatch({ type: DELETE_CATEGORY, categoriesArray: data })
       })
       .catch((err) => err)
   }
