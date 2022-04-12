@@ -20,7 +20,7 @@ const Main = () => {
       <Header isDel={isDel} setDel={setDel} />
       <div className="my-auto h-full flex flex-col justify-center items-center flex-wrap">
         <div className="flex flex-col justify-center items-center flex-wrap p-5 rounded-md bg-neutral-800">
-          <div className="p-1 text-white text-xl">set category:</div>
+          <p className="p-1 text-white text-xl">set category:</p>
           <div className="flex justify-center items-center">
             <input
               type="text"

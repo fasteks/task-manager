@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,15 +9,10 @@ const CategoryDelete = () => {
   const dispatch = useDispatch()
   const [text, setText] = useState('')
   const { categoriesList } = useSelector((s) => s.tasks)
-  let isCategory
-  const isCategoryOnList = (str) => {
-    isCategory = categoriesList.indexOf(str)
-    return isCategory
-  }
 
-  useEffect(() => {
-    isCategoryOnList(text)
-  }, [text])
+  const isCategoryOnList = (str) => {
+    return categoriesList.includes(str)
+  }
 
   return (
     <div className="flex justify-center items-center">
@@ -36,7 +31,7 @@ const CategoryDelete = () => {
         type="button"
         className="ml-0.5 p-1 text-red-500 rounded-md"
         onClick={() => {
-          if (text.length > 1 && isCategory !== -1) {
+          if (text.length > 1 && isCategoryOnList(text)) {
             setText('')
             dispatch(deleteCategory(text))
           } else {

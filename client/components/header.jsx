@@ -63,7 +63,7 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
         </div>
       ) : (
         <Link to="/" className="p-2 text-center">
-          There are no available categories!
+          There is no available categories!
         </Link>
       )}
       {!isMain && (

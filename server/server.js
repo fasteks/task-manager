@@ -72,7 +72,6 @@ const calculateTime = (tasks, date) => {
   if (date === 'century') time = century
   const tasksSortedByTime = tasks.filter((it) => {
     return +new Date() - +it._createdAt <= time
-    // return +it._createdAt + +time > +new Date()
   })
   return tasksSortedByTime
 }
