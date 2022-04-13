@@ -1,5 +1,13 @@
-button.header__button {
+.header__button {
+  &:hover {
+    background-color: rgb(32, 190, 0);
+  }
+}
 
+button.header__button {
+  &:hover {
+    background-color: rgb(32, 190, 0);
+  }
   &--active {
     color: black;
     background-color: rgb(255, 255, 255);
@@ -7,9 +15,12 @@ button.header__button {
 }
 
 .header__category {
-
-  &--active {
+  &:hover {
     color: black;
-    background-color: rgb(255, 255, 255);
+    background-color: yellow;
+  }
+  &--active {
+    color: white;
+    background-color: rgb(248, 7, 7);
   }
 }

@@ -36,7 +36,7 @@ const Header = ({ category, setHidden, active, setActive }) => {
               Category:
             </div>
           ) : (
-            <Link to="/" className="p-2 text-center">
+            <Link to="/" className="header__button p-2 text-center">
               Category:
             </Link>
           )}
@@ -47,7 +47,7 @@ const Header = ({ category, setHidden, active, setActive }) => {
                 key={index}
                 id={`category-${index}`}
                 title={it}
-                className={classnames('header__category p-2', {
+                className={classnames('header__button header__category p-2', {
                   'header__category--active': activeCategory === index
                 })}
                 onClick={(e) => {
@@ -74,7 +74,7 @@ const Header = ({ category, setHidden, active, setActive }) => {
           <button
             type="button"
             id="button-1"
-            className={classnames('ml-2 p-2 text-center', {
+            className={classnames('header__button ml-2 p-2 text-center', {
               'header__button--active': active === 'button-1'
             })}
             onClick={() => {
@@ -88,7 +88,7 @@ const Header = ({ category, setHidden, active, setActive }) => {
           <button
             type="button"
             id="button-2"
-            className={classnames('p-2 text-center', {
+            className={classnames('header__button p-2 text-center', {
               'header__button--active': active === 'button-2'
             })}
             onClick={() => {
@@ -102,7 +102,7 @@ const Header = ({ category, setHidden, active, setActive }) => {
           <button
             type="button"
             id="button-3"
-            className={classnames('p-2 text-center', {
+            className={classnames('header__button p-2 text-center', {
               'header__button--active': active === 'button-3'
             })}
             onClick={() => {
@@ -116,7 +116,7 @@ const Header = ({ category, setHidden, active, setActive }) => {
           <button
             type="button"
             id="button-4"
-            className={classnames('p-2 text-center', {
+            className={classnames('header__button p-2 text-center', {
               'header__button--active': active === 'button-4'
             })}
             onClick={() => {
@@ -130,7 +130,7 @@ const Header = ({ category, setHidden, active, setActive }) => {
           <button
             type="button"
             id="button-5"
-            className={classnames('p-2 text-center italic text-neutral-500', {
+            className={classnames('header__button p-2 text-center italic text-neutral-500', {
               'header__button--active': active === 'button-5'
             })}
             onClick={() => {
