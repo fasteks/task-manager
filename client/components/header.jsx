@@ -52,6 +52,7 @@ const Header = ({ category, setHidden, active, setActive }) => {
                 })}
                 onClick={(e) => {
                   if (!isMain) {
+                    setActive('button-1')
                     setHidden(false)
                     setActiveCategory(index)
                   }
