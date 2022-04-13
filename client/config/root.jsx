@@ -6,7 +6,7 @@ import { Switch, Route, Redirect, StaticRouter } from 'react-router-dom'
 import store, { history } from '../redux'
 
 import Tasks from '../components/tasks/tasks'
-import Main from '../components/main/main'
+import Main from '../components/main'
 import NotFound from '../components/404'
 
 import Startup from './startup'

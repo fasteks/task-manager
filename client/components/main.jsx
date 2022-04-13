@@ -1,23 +1,26 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faMinus } from '@fortawesome/free-solid-svg-icons'
 
-import Head from '../head'
-import Header from '../header'
-import CategoryDelete from './categoryDelete'
+import Head from './head'
+import Header from './header'
 
-import { addCategory } from '../../redux/reducers/categories'
+import { addCategory, deleteCategory } from '../redux/reducers/categories'
 
 const Main = () => {
   const dispatch = useDispatch()
   const [text, setText] = useState('')
-  const [isDel, setDel] = useState(false)
+  const { categoriesList } = useSelector((s) => s.categories)
+
+  const isCategoryOnList = (str) => {
+    return categoriesList.includes(str)
+  }
   return (
     <div className="min-h-screen flex flex-col flex-wrap bg-gray-500">
       <Head title="Tasks" />
-      <Header isDel={isDel} setDel={setDel} />
+      <Header />
       <div className="my-auto h-full flex flex-col justify-center items-center flex-wrap">
         <div className="flex flex-col justify-center items-center flex-wrap p-5 rounded-md bg-neutral-800">
           <p className="p-1 text-white text-xl">set category:</p>
@@ -32,7 +35,7 @@ const Main = () => {
             />
             <button
               type="button"
-              className="p-1 text-green-500"
+              className="ml-2 p-1 text-green-500"
               onClick={() => {
                 if (text.length > 1 && text.trim() !== '') {
                   setText('')
@@ -42,8 +45,21 @@ const Main = () => {
             >
               <FontAwesomeIcon icon={faCheck} className="text-3xl" />
             </button>
+            <button
+              type="button"
+              className="ml-0.5 p-1 text-red-500 rounded-md"
+              onClick={() => {
+                if (text.length > 1 && isCategoryOnList(text)) {
+                  setText('')
+                  dispatch(deleteCategory(text))
+                } else {
+                  setText('wrong')
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faMinus} className="text-3xl" />
+            </button>
           </div>
-          {isDel && <CategoryDelete isDel={isDel} setDel={setDel} />}
         </div>
       </div>
     </div>

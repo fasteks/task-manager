@@ -8,7 +8,7 @@ import './header.scss'
 import { setTimespan } from '../redux/reducers/tasks'
 import { getCategories } from '../redux/reducers/categories'
 
-const Header = ({ category, setHidden, isDel, setDel, active, setActive }) => {
+const Header = ({ category, setHidden, active, setActive }) => {
   const dispatch = useDispatch()
   const location = useLocation()
   const isMain = location.pathname === '/'
@@ -29,17 +29,6 @@ const Header = ({ category, setHidden, isDel, setDel, active, setActive }) => {
 
   return (
     <div className="min-w-fit flex justify-center items-center min-w-full p-4 text-white font-semibold bg-neutral-800">
-      {isMain && !isCategoryList && (
-        <button
-          type="button"
-          className="italic font-thin text-neutral-500"
-          onClick={() => {
-            setDel(!isDel)
-          }}
-        >
-          del
-        </button>
-      )}
       {!isCategoryList ? (
         <div className="flex flex-wrap justify-center items-center grow">
           {isMain ? (
