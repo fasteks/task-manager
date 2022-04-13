@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import { addTask } from '../../redux/reducers/tasks'
 
-const TaskAdd = ({ category }) => {
+const TaskAdd = ({ category, setActive }) => {
   const dispatch = useDispatch()
   const [text, setText] = useState('')
 
@@ -22,6 +22,7 @@ const TaskAdd = ({ category }) => {
         className="p-1 text-white"
         onClick={() => {
           if (text.length > 1 && text.trim() !== '') {
+            setActive('button-1')
             setText('')
             dispatch(addTask(category, text))
           }

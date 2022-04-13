@@ -68,6 +68,7 @@ const calculateTime = (tasks, date) => {
   }
   return tasks.filter((it) => {
     return +new Date() - +it._createdAt <= timespanObj[date]
+    // return +it._createdAt + +timespanObj[date] > +new Date()
   })
 }
 

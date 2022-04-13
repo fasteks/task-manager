@@ -16,6 +16,7 @@ const Tasks = () => {
   const { category } = useParams()
   const [hidden, setHidden] = useState(false)
   const { tasksList } = useSelector((s) => s.tasks)
+  const [active, setActive] = useState('button-1')
 
   useEffect(() => {
     dispatch(getTasks(category))
@@ -24,11 +25,17 @@ const Tasks = () => {
   return (
     <div className="min-h-screen min-w-min flex flex-col bg-gray-500">
       <Head title={category} />
-      <Header category={category} hidden={hidden} setHidden={setHidden} />
+      <Header
+        category={category}
+        hidden={hidden}
+        setHidden={setHidden}
+        active={active}
+        setActive={setActive}
+      />
       <div className="min-w-fit my-auto flex items-center justify-center text-center">
         {!hidden && (
           <div className="flex flex-col flex-wrap items-center justify-between p-3 pb-5 border-4 border-emerald-600 bg-neutral-800">
-            <TaskAdd category={category} />
+            <TaskAdd category={category} setActive={setActive} />
             <div className="flex flex-wrap justify-center">
               {tasksList.map((it) => {
                 return <Task key={it.taskId} taskObj={it} category={category} />

@@ -2,10 +2,13 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 
+import classnames from 'classnames'
+import './header.scss'
+
 import { setTimespan } from '../redux/reducers/tasks'
 import { getCategories } from '../redux/reducers/categories'
 
-const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
+const Header = ({ category, setHidden, isDel, setDel, active, setActive }) => {
   const dispatch = useDispatch()
   const location = useLocation()
   const isMain = location.pathname === '/'
@@ -76,8 +79,12 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
           Show:
           <button
             type="button"
-            className="ml-2 p-2 text-center"
+            id="button-1"
+            className={classnames('ml-2 p-2 text-center', {
+              'header__button--active': active === 'button-1'
+            })}
             onClick={() => {
+              setActive('button-1')
               setHidden(false)
               dispatch(setTimespan(category, timespanObj.century))
             }}
@@ -86,8 +93,12 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
           </button>
           <button
             type="button"
-            className="p-2 text-center"
+            id="button-2"
+            className={classnames('p-2 text-center', {
+              'header__button--active': active === 'button-2'
+            })}
             onClick={() => {
+              setActive('button-2')
               setHidden(false)
               dispatch(setTimespan(category, timespanObj.day))
             }}
@@ -96,8 +107,12 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
           </button>
           <button
             type="button"
-            className="p-2 text-center"
+            id="button-3"
+            className={classnames('p-2 text-center', {
+              'header__button--active': active === 'button-3'
+            })}
             onClick={() => {
+              setActive('button-3')
               setHidden(false)
               dispatch(setTimespan(category, timespanObj.week))
             }}
@@ -105,9 +120,13 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
             Week
           </button>
           <button
-            className="p-2 text-center"
             type="button"
+            id="button-4"
+            className={classnames('p-2 text-center', {
+              'header__button--active': active === 'button-4'
+            })}
             onClick={() => {
+              setActive('button-4')
               setHidden(false)
               dispatch(setTimespan(category, timespanObj.month))
             }}
@@ -115,10 +134,14 @@ const Header = ({ category, hidden, setHidden, isDel, setDel }) => {
             Month
           </button>
           <button
-            className="p-2 text-center italic text-neutral-500"
             type="button"
+            id="button-5"
+            className={classnames('p-2 text-center italic text-neutral-500', {
+              'header__button--active': active === 'button-5'
+            })}
             onClick={() => {
-              setHidden(!hidden)
+              setActive('button-5')
+              setHidden(true)
             }}
           >
             Hidden
