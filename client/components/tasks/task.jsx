@@ -24,7 +24,7 @@ const Task = ({ taskObj, category }) => {
           {!insert && (
             <button
               type="button"
-              className="text-yellow-400"
+              className="text-black"
               onClick={() => {
                 setInsert(!insert)
                 setText(taskObj.title)
@@ -36,7 +36,7 @@ const Task = ({ taskObj, category }) => {
           {insert && (
             <button
               type="button"
-              className="text-sky-300"
+              className="text-black"
               onClick={() => {
                 setInsert(!insert)
                 dispatch(changeTitle(category, taskObj.taskId, text))
@@ -47,7 +47,7 @@ const Task = ({ taskObj, category }) => {
           )}
           <button
             type="button"
-            className="ml-0.5 text-rose-300"
+            className="ml-0.5 text-black"
             onClick={() => {
               dispatch(deleteTask(category, taskObj.taskId))
             }}
@@ -59,7 +59,7 @@ const Task = ({ taskObj, category }) => {
       {!insert && <span className="flex justify-center truncate text-lg">{taskObj.title}</span>}
       {insert && (
         <input
-          className="flex text-black text-lg"
+          className="w-full text-black text-lg"
           value={text}
           onChange={(e) => {
             setText(e.target.value)
