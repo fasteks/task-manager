@@ -5,3 +5,11 @@ button.header__button {
     background-color: rgb(255, 255, 255);
   }
 }
+
+.header__category {
+
+  &--active {
+    color: black;
+    background-color: rgb(255, 255, 255);
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -14,7 +14,8 @@ const Header = ({ category, setHidden, isDel, setDel, active, setActive }) => {
   const isMain = location.pathname === '/'
   const { categoriesList } = useSelector((s) => s.categories)
   const isCategoryList = categoriesList.length === 0
-
+  const initialValue = isMain ? null : 0
+  const [activeCategory, setActiveCategory] = useState(initialValue)
   const timespanObj = {
     day: 'day',
     week: 'week',
@@ -55,11 +56,15 @@ const Header = ({ category, setHidden, isDel, setDel, active, setActive }) => {
               <Link
                 to={`/${it}`}
                 key={index}
+                id={`category-${index}`}
                 title={it}
-                className="p-2"
+                className={classnames('header__category p-2', {
+                  'header__category--active': activeCategory === index
+                })}
                 onClick={(e) => {
                   if (!isMain) {
                     setHidden(false)
+                    setActiveCategory(index)
                   }
                   if (location.pathname === `/${it}`) {
                     e.preventDefault()
